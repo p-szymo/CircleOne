@@ -1,3 +1,4 @@
 __pycache__
 *.xml
 creds.py
+*.jar
