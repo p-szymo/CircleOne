@@ -1,6 +1,6 @@
 from general_functions import soupify, type_check
 import itertools
-# whaddup
+
 
 def events_list(
     year,

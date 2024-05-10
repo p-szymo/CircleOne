@@ -1,9 +1,7 @@
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 from teams import teams
-
 import time
-
 
 
 def live_scorer(event_id, wait_time=5):

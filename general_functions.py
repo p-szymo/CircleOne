@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
-#whaddup
+
 
 def soupify(url, _type="html.parser"):
     page = requests.get(url)
