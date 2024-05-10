@@ -5,7 +5,7 @@ import itertools
 from datetime import date as dt
 import re
 from statistics import median
-#
+
 
 class Event(EventSearch):
 

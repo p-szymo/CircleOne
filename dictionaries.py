@@ -1,6 +1,5 @@
 # HELPER DICTIONARIES
 
-
 def event_table_dict():
     return {
         'Place': 'int',

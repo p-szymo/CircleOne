@@ -2,6 +2,7 @@ import psycopg2
 import creds
 
 def connect_to_sql():
+
     connection = psycopg2.connect(
         host='localhost',
         database='dg_fantasy',
@@ -16,16 +17,16 @@ def connect_to_sql():
 
 
 def close_connection(connection, executor):
+
     executor.close()
-
     connection.commit()
-
     connection.close()
 
     return None
 
 
 def insert_event(event, to_print=False):
+
     connection, postgres = connect_to_sql()
 
     postgres.execute(event.table_exists_query)

@@ -1,0 +1,86 @@
+from general_scrape import events_list
+from postgres import insert_event
+from league import Player
+
+
+def event_scraper(year, wait_time=1, to_print=False):
+    event_details = events_list(year)
+    event_details = [event for event in event_details if 'DOUBLES' not in event[0].upper()]
+
+    events = []
+    events_errors = []
+
+    for event_name, link in event_details:
+        try:
+            events.append(Event(name=event_name, url=link, year=year))
+        except:
+            if to_print: print('ERROR: link')
+            events_errors.append(link)
+        time.sleep(wait_time)
+
+    return events, events_errors
+
+
+def player_scraper(pdga_number, wait_time=1, to_print=False):
+
+    link = f'https://www.pdga.com/player/{pdga_number}'
+    try:
+        player = Player(url=link)
+    except:
+        if to_print: print(link)
+        player = {
+            'pdga_number': pdga_number,
+            'url': link,
+            'official_name': '',
+            'first_name': '',
+            'last_name': '',
+            'rating': 0,
+            'is_active': False
+        }
+
+    time.sleep(wait_time)
+
+    return player
+
+    print('Number of players:', len(players))
+    print('Number of errors:', len(player_errors))
+
+########################
+# SCRAPE/INSERT EVENTS #
+########################
+
+years_to_pull = [2022, 2023, 2024]
+
+all_events = []
+for year in years_to_pull:
+    events, events_errors = event_scraper(2024, wait_time=0.5, to_print=False)
+    print(f'''{year} events: {len(events)} | {year} errors: {len(events_errors)} ''')
+
+    for event in events:
+        all_events.append(event)
+        insert_event(event, to_print=True)
+
+
+#########################
+# SCRAPE/INSERT PLAYERS #
+#########################
+
+pdga_numbers_by_event = [event.results_df['PDGA Number'].values for event in all_events]
+
+pdga_numbers = list(set([number for event in pdga_numbers for number in event]))
+
+print(f'Number of players: {len(pdga_numbers)}')
+
+players = []
+player_errors = []
+
+for link in player_links:
+    try:
+        players.append(Player(url=link))
+    except:
+        # print(link)
+        player_errors.append(link)
+    time.sleep(0.5)
+
+print('Number of players:', len(players))
+print('Number of errors:', len(player_errors))
