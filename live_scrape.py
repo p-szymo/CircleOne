@@ -2,15 +2,37 @@ from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 from teams import teams
 import time
+import streamlit as st
+import os
+import sys
+from selenium import webdriver
+from selenium.webdriver import FirefoxOptions
 
 
 def live_scorer(event_id, wait_time=5):
     event_results = {}
     url = f'https://www.pdga.com/apps/tournament/live/event?view=Scores&eventId={event_id}&division=MPO'
-    op = webdriver.ChromeOptions()
-    op.add_argument('headless')
-    driver = webdriver.Chrome(options=op)
-    driver.get(url)
+    # op = webdriver.ChromeOptions()
+    # op.add_argument('headless')
+    # driver = webdriver.Chrome(options=op)
+    # driver.get(url)
+
+    @st.experimental_singleton
+    def installff():
+        os.system('sbase install geckodriver')
+        os.system(
+            'ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver'
+        )
+        return None
+
+    _ = installff()
+    opts = FirefoxOptions()
+    opts.add_argument("--headless")
+    browser = webdriver.Firefox(options=opts)
+
+    browser.get('http://example.com')
+    st.write(browser.page_source)
+
     time.sleep(wait_time)
     html = driver.page_source
     soup = bs(html, 'html.parser')
