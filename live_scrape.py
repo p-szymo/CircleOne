@@ -7,7 +7,9 @@ import time
 def live_scorer(event_id, wait_time=5):
     event_results = {}
     url = f'https://www.pdga.com/apps/tournament/live/event?view=Scores&eventId={event_id}&division=MPO'
-    driver = webdriver.Chrome()
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(options=op)
     driver.get(url)
     time.sleep(wait_time)
     html = driver.page_source
@@ -95,7 +97,7 @@ def current_team_score(results, team):
     return total_score, not_playing, dnf, team_results
 
 
-def score_it(league, event_number):
+def score_it(league, event_number, to_print=False):
     results = live_scorer(event_number)
     scores = {}
     team_results = {}
@@ -118,16 +120,30 @@ def score_it(league, event_number):
 
     sorted_scores = {k: v for k, v in sorted(scores.items(), key=lambda item: item[1]['score'])}
 
+    printout = []
+
     for owner, score in sorted_scores.items():
-        print(owner + ': ' + str(score['score']) + score['addenda'])
+        line = f"{owner}: {str(score['score'])}{score['addenda']}"
+        printout.append(line)
 
-    print()
+    league_print_string = '\n'.join(printout)
+    if to_print: print(league_print_string + '\n')
 
+    full_printout = []
     for owner, team_result in team_results.items():
         sorted_results = {k: v for k, v in sorted(team_result.items(), key=lambda item: item[1])}
-        print(owner)
+        full_printout.append('\n' + owner)
+        if to_print: print(owner)
         for player, score in sorted_results.items():
-            print(f'{player}: {score}')
+            player_score = f'{player}: {score}'
+            full_printout.append(player_score)
+            if to_print: print(player_score)
+
+    teams_print_string = '\n'.join(full_printout)
+    if to_print: print(teams_print_string)
+
+    return league_print_string, teams_print_string
+
 
 ###########
 # TESTING #
@@ -135,4 +151,4 @@ def score_it(league, event_number):
 league = teams()
 event_number = 77763
 
-score_it(league, event_number)
+score_it(league, event_number, to_print=True)
