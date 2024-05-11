@@ -2,22 +2,6 @@
 import streamlit as st
 from live_scrape import score_it # live_scorer, current_player_score
 from teams import teams
-import os, sys
-
-@st.experimental_singleton
-def installff():
-    os.system('sbase install geckodriver')
-    os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver')
-
-_ = installff()
-from selenium import webdriver
-from selenium.webdriver import FirefoxOptions
-opts = FirefoxOptions()
-opts.add_argument("--headless")
-browser = webdriver.Firefox(options=opts)
-
-browser.get('http://example.com')
-st.write(browser.page_source)
 
 # title
 st.title('CIRCLE ONE')
