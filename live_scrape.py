@@ -21,7 +21,7 @@ def live_scorer(event_id, wait_time=5):
     def installff():
         os.system('sbase install geckodriver')
         os.system(
-            'ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver'
+            'ln -s /home/appuser/venv/lib/python3.11/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver'
         )
         return None
 
