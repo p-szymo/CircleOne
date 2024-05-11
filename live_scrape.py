@@ -17,7 +17,7 @@ def live_scorer(event_id, wait_time=5):
     # driver = webdriver.Chrome(options=op)
     # driver.get(url)
 
-    @st.experimental_singleton
+    @st.cache_resource
     def installff():
         os.system('sbase install geckodriver')
         os.system(
