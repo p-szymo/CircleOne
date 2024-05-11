@@ -95,40 +95,44 @@ def current_team_score(results, team):
     return total_score, not_playing, dnf, team_results
 
 
+def score_it(league, event_number):
+    results = live_scorer(event_number)
+    scores = {}
+    team_results = {}
+
+    for team in league:
+        owner = team['owner']
+
+        score, not_playing, dnf, team_result = current_team_score(results, team)
+
+        if not_playing:
+            addenda = ' # not playing: ' + ' | '.join(not_playing)
+        else:
+            addenda = ''
+
+        if dnf:
+            addenda += ' # did not finish: ' + ' | '.join(dnf)
+
+        scores[owner] = {'score': score, 'addenda': addenda}
+        team_results[owner] = team_result
+
+    sorted_scores = {k: v for k, v in sorted(scores.items(), key=lambda item: item[1]['score'])}
+
+    for owner, score in sorted_scores.items():
+        print(owner + ': ' + str(score['score']) + score['addenda'])
+
+    print()
+
+    for owner, team_result in team_results.items():
+        sorted_results = {k: v for k, v in sorted(team_result.items(), key=lambda item: item[1])}
+        print(owner)
+        for player, score in sorted_results.items():
+            print(f'{player}: {score}')
+
+###########
+# TESTING #
+###########
 league = teams()
+event_number = 77763
 
-results = live_scorer(77763)
-
-scores = {}
-team_results = {}
-
-for team in league:
-    owner = team['owner']
-    starters = team['starters']
-    bench = team['bench']
-
-    score, not_playing, dnf, team_result = current_team_score(results, team)
-
-    if not_playing:
-        addenda = ' # not playing: ' + ' | '.join(not_playing)
-    else:
-        addenda = ''
-
-    if dnf:
-        addenda += ' # did not finish: ' + ' | '.join(dnf)
-
-    scores[owner] = {'score': score, 'addenda': addenda}
-    team_results[owner] = team_result
-
-sorted_scores = {k: v for k, v in sorted(scores.items(), key=lambda item: item[1]['score'])}
-
-for owner, score in sorted_scores.items():
-    print(owner + ': ' + str(score['score']) + score['addenda'])
-
-print()
-
-for owner, team_result in team_results.items():
-    sorted_results = {k: v for k, v in sorted(team_result.items(), key=lambda item: item[1])}
-    print(owner)
-    for player, score in sorted_results.items():
-        print(f'{player}: {score}')
+score_it(league, event_number)
