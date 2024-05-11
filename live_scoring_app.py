@@ -14,19 +14,19 @@ wait_time = 2
 # @st.cache_data
 # def score_it(league, event_number, wait_time=5, to_print=False):
 
-
 # format blank space
 st.markdown('')
-data_load_state = st.text('Loading data...')
-# format blank space
-st.markdown('')
-
-# generate live scores
-league_totals, team_scores_by_player = score_it(league, event_number, wait_time)
-
-data_load_state.text("Done!")
 
 if st.button('Show me the scores!'):
+
+    # format blank space
+    st.markdown('')
+    data_load_state = st.text('Loading data...')
+
+    # generate live scores
+    league_totals, team_scores_by_player = score_it(league, event_number, wait_time)
+
+    data_load_state.text("Done!")
 
     # format blank space
     st.markdown('')

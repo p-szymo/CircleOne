@@ -18,21 +18,6 @@ def teams():
         ]
     },
     {
-        'owner': 'SAM',
-        'starters': [
-            'Paul McBeth',
-            'Anthony Barela',
-            'Benjamin Callaway',
-            'Gavin Babcock',
-            'Grady Shue'
-        ],
-        'bench': [
-            'Cale Leiviska',
-            'Corey Ellis',
-            'Nathan Sexton'
-        ]
-    },
-    {
         'owner': 'DEREK',
         'starters': [
             'Isaac Robinson',
@@ -76,6 +61,21 @@ def teams():
             'James Conrad',
             'Jakub Semerád',
             'Jake Hebenheimer'
+        ]
+    },
+    {
+        'owner': 'SAM',
+        'starters': [
+            'Paul McBeth',
+            'Anthony Barela',
+            'Benjamin Callaway',
+            'Gavin Babcock',
+            'Grady Shue'
+        ],
+        'bench': [
+            'Cale Leiviska',
+            'Corey Ellis',
+            'Nathan Sexton'
         ]
     },
     {
