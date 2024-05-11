@@ -28,12 +28,11 @@ def live_scorer(event_id, wait_time=5):
     _ = installff()
     opts = FirefoxOptions()
     opts.add_argument("--headless")
-    browser = webdriver.Firefox(options=opts)
+    driver = webdriver.Firefox(options=opts)
 
-    browser.get('http://example.com')
-    st.write(browser.page_source)
-
+    driver.get(url)
     time.sleep(wait_time)
+
     html = driver.page_source
     soup = bs(html, 'html.parser')
     rows = soup.select('div[class="table-row"]')
