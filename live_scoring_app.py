@@ -41,4 +41,4 @@ if status.split(' ')[0] == 'CURRENT':
 else:
     # format blank space
     st.markdown('')
-    st.markdown('# ' + status)
+    st.markdown('## ' + status)
