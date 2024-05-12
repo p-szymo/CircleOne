@@ -16,6 +16,8 @@ def type_check(item, _type):
 
 
 def table_exists(table_name):
+    table_name = table_name.replace("'", "''")
+
     table_exists_query = f"""SELECT 1
 FROM information_schema.tables
 WHERE table_name='{table_name}'"""
