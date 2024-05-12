@@ -14,7 +14,7 @@ wait_time = 2
 # format blank space
 st.markdown('')
 
-event_number, status = event_status(schedule_2024())
+event_number, status, check_back = event_status(schedule_2024())
 
 if status.split(' ')[0] == 'CURRENT':
     if st.button('Show me the scores!'):

@@ -163,7 +163,10 @@ def event_status(schedule):
             next_event = event
             next_event_number = len(schedule) - i
         else:
-            return next_event['EVENT_NUMBER'], f"NEXT EVENT - TOUR STOP #{next_event_number} - {next_event['EVENT_NAME']}"
+            datestring = datetime.strptime(start_date, "%Y-%m-%d").strftime("%B %-d")
+            message = f"""NEXT EVENT - TOUR STOP #{next_event_number} - {next_event['EVENT_NAME']}
+### Check back on {datestring} at noon"""
+            return next_event['EVENT_NUMBER'], message
 
 
 print(event_status(tour))
