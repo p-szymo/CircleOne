@@ -77,8 +77,8 @@ def insert_player(players, to_print=False):
     return None
 
 
-# TEST CONNECTION
-connection, executor = connect_to_sql()
-close_connection(connection, executor)
-
-print('it worked!')
+# # TEST CONNECTION
+# connection, executor = connect_to_sql()
+# close_connection(connection, executor)
+#
+# print('it worked!')

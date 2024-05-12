@@ -1,7 +1,8 @@
 from general_scrape import events_list
 from postgres import insert_event
-from league import Player
+from league import Player, Event
 import pandas as pd
+import time
 
 
 def event_scraper(year, wait_time=1, to_print=False):
@@ -54,12 +55,12 @@ years_to_pull = [2022, 2023, 2024]
 
 all_events = []
 for year in years_to_pull:
-    events, events_errors = event_scraper(2024, wait_time=0.5, to_print=False)
+    events, events_errors = event_scraper(year, wait_time=0.5, to_print=False)
     print(f'''{year} events: {len(events)} | {year} errors: {len(events_errors)} ''')
 
     for event in events:
         all_events.append(event)
-        event.results_df.to_csv(f'data/{event.official_name}', index=False)
+        event.results_df.to_csv(f'data/{event.official_name}.csv', index=False)
         insert_event(event, to_print=True)
 
 
@@ -69,20 +70,21 @@ for year in years_to_pull:
 
 pdga_numbers_by_event = [event.results_df['PDGA Number'].values for event in all_events]
 
-pdga_numbers = list(set([number for event in pdga_numbers for number in event]))
+pdga_numbers = list(set([number for event in pdga_numbers_by_event for number in event]))
 
 print(f'Number of players: {len(pdga_numbers)}')
 
 players = []
 player_errors = []
 
-for link in player_links:
+for number in pdga_numbers:
+    link = f"www.pdga.com/player/{number}"
     try:
         players.append(Player(url=link))
     except:
         # print(link)
         players.append({
-            'PlayerID': link.split('/')[-1],
+            'PlayerID': number,
             'PlayerName': None,
             'PlayerRating': 0,
             'PlayerURL': link,

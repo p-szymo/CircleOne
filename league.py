@@ -1,4 +1,5 @@
 from general_functions import soupify, type_check, table_exists, create_table, insert_data
+from general_scrape import EventSearch, PlayerSearch
 from dictionaries import event_table_dict, player_table_dict, league_table_dict
 import pandas as pd
 import itertools
