@@ -13,50 +13,43 @@ def live_scorer(event_id, wait_time=5):
     event_results = {}
     url = f'https://www.pdga.com/apps/tournament/live/event?view=Scores&eventId={event_id}&division=MPO'
 
-    with st.echo():
-        from selenium import webdriver
-        from selenium.webdriver.chrome.options import Options
-        from selenium.webdriver.chrome.service import Service
-        from webdriver_manager.chrome import ChromeDriverManager
-        from webdriver_manager.core.os_manager import ChromeType
+    @st.cache_resource
+    def get_driver():
+        return webdriver.Chrome(
+            service=Service(
+                ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+            ),
+            options=options,
+        )
 
-        @st.cache_resource
-        def get_driver():
-            return webdriver.Chrome(
-                service=Service(
-                    ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
-                ),
-                options=options,
-            )
+    options = Options()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--headless")
 
-        options = Options()
-        options.add_argument("--disable-gpu")
-        options.add_argument("--headless")
+    driver = get_driver()
 
-        driver = get_driver()
+    driver.get(url)
+    time.sleep(wait_time)
 
-        driver.get(url)
-        time.sleep(wait_time)
+    html = driver.page_source
+    soup = bs(html, 'html.parser')
+    rows = soup.select('div[class="table-row"]')
 
-        html = driver.page_source
-        soup = bs(html, 'html.parser')
-        rows = soup.select('div[class="table-row"]')
-
-        for row in rows:
-            player_first_name = row.select_one('span[class="player-first-name"]').text
-            player_last_name = row.select_one('span[class="player-last-name"]').text
-            player_name = player_first_name + ' ' + player_last_name
-            player_place_raw = row.select_one('span[class*="py-2"]').text
-            if player_place_raw[0] == 'T':
-                player_place = int(player_place_raw[1:])
-            else:
-                player_place = int(player_place_raw)
-            par = row.select_one('div[class="label-1-semibold"]')
-            if par:
-                dnf = par.text.upper() == 'DNF'
-            else:
-                dnf = False
-            event_results[player_name] = {'place': player_place, 'dnf': dnf}
+    for row in rows:
+        player_first_name = row.select_one('span[class="player-first-name"]').text
+        player_last_name = row.select_one('span[class="player-last-name"]').text
+        player_name = player_first_name + ' ' + player_last_name
+        player_place_raw = row.select_one('span[class*="py-2"]').text
+        if player_place_raw[0] == 'T':
+            player_place = int(player_place_raw[1:])
+        else:
+            player_place = int(player_place_raw)
+        par = row.select_one('div[class="label-1-semibold"]')
+        if par:
+            dnf = par.text.upper() == 'DNF'
+        else:
+            dnf = False
+        event_results[player_name] = {'place': player_place, 'dnf': dnf}
 
     return event_results
 
