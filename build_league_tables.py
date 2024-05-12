@@ -18,12 +18,18 @@ def event_scraper(year, wait_time=1, to_print=False):
         try:
             e = Event(name=event_name, url=link, year=year)
             events.append(e)
-            events_df.append(e.results_df, ignore_index=True)
-            events_mapping_df.append({
-                'EventID': e.pdga_event_number,
-                'EventName': e.official_name,
-                'Year': year
-            })
+            events_df = pd.concat([events_df, e.results_df], ignore_index=True)
+            events_mapping_df = pd.concat(
+                [
+                    events_mapping_df,
+                    pd.DataFrame({
+                        'EventID': e.pdga_event_number,
+                        'EventName': e.official_name,
+                        'Year': year
+                    })
+                ],
+                ignore_index=True
+            )
         except:
             if to_print: print('ERROR: link')
             events_errors.append(link)
@@ -70,8 +76,8 @@ for year in years_to_pull:
     events, events_errors, events_df, events_mapping_df = event_scraper(year, wait_time=0.5, to_print=False)
     print(f'''{year} events: {len(events)} | {year} errors: {len(events_errors)} ''')
 
-    all_events_df.append(events_df, ignore_index=True)
-    all_events_mapping_df.append(events_mapping_df, ignore_index=True)
+    all_events_df = pd.concat([all_events_df, events_df], ignore_index=True)
+    all_events_mapping_df = pd.concat([all_events_mapping_df, events_mapping_df], ignore_index=True)
 
     # for event in events:
     #     all_events.append(event)
