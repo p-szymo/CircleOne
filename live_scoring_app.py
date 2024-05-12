@@ -2,7 +2,7 @@
 import streamlit as st
 from live_scrape import score_it # live_scorer, current_player_score
 from teams import teams
-from tour_schedule import is_event, schedule_2024
+from tour_schedule import event_status, schedule_2024
 
 # title
 st.title('CIRCLE ONE')
