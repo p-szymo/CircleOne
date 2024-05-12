@@ -16,7 +16,6 @@ st.markdown('')
 
 event_number, status = event_status(schedule_2024())
 
-st.markdown('')
 st.markdown('## ' + status)
 st.markdown('')
 
