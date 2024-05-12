@@ -52,7 +52,7 @@ def schedule_2024():
             'EVENT_NAME': 'Dynamic Discs Open',
             'EVENT_NUMBER': 77763,
             'START_DATE': '2024-05-03',
-            'END_DATE': '2024-05-05'
+            'END_DATE': '2024-05-12'
         },
         {
             'EVENT_NAME': 'OTB Open',
