@@ -60,7 +60,8 @@ for year in years_to_pull:
 
     for event in events:
         all_events.append(event)
-        event.results_df.to_csv(f'data/{event.official_name}.csv', index=False)
+        file_name = event.official_name.replace(year, '').strip() + '.csv'
+        event.results_df.to_csv(f'data/{file_name}', index=False)
         insert_event(event, to_print=True)
 
 
