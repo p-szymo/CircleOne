@@ -65,10 +65,9 @@ class Event(EventSearch):
         else:
             score = "ERROR"
         result = {  # could also do round scores, round ratings, and total score
+            'EventID': int(self.pdga_event_number),
+            'PlayerID': int(row.select_one('td[class*="pdga-number"]').text),
             'Place': int(row.select_one('td[class*="place"]').text),
-            'Player': row.select_one('td[class*="player"]').text,
-            'PDGA Number': int(row.select_one('td[class*="pdga-number"]').text),
-            'Player Rating': int(row.select_one('td[class*="player-rating"]').text),
             'Score': score,
         }
         return result
@@ -591,3 +590,6 @@ WHERE "Team Name"='{self.name}'
         close_connection(connection, postgres)
 
         return None
+
+
+print(Player(url="https://www.pdga.com/player/75412").__dict__)
