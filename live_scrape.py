@@ -1,34 +1,32 @@
 from bs4 import BeautifulSoup as bs
-from selenium import webdriver
 from teams import teams
 import time
 import streamlit as st
-import os
-import sys
 from selenium import webdriver
-from selenium.webdriver import FirefoxOptions
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.os_manager import ChromeType
 
 
 def live_scorer(event_id, wait_time=5):
     event_results = {}
     url = f'https://www.pdga.com/apps/tournament/live/event?view=Scores&eventId={event_id}&division=MPO'
-    # op = webdriver.ChromeOptions()
-    # op.add_argument('headless')
-    # driver = webdriver.Chrome(options=op)
-    # driver.get(url)
 
     @st.cache_resource
-    def installff():
-        os.system('sbase install geckodriver')
-        os.system(
-            'ln -s /home/appuser/venv/lib/python3.11/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver'
+    def get_driver():
+        return webdriver.Chrome(
+            service=Service(
+                ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+            ),
+            options=options,
         )
-        return None
 
-    _ = installff()
-    opts = FirefoxOptions()
-    opts.add_argument("--headless")
-    driver = webdriver.Firefox(options=opts)
+    options = Options()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--headless")
+
+    driver = get_driver()
 
     driver.get(url)
     time.sleep(wait_time)
