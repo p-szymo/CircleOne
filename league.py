@@ -130,40 +130,6 @@ class Event(EventSearch):
         return f"{event_name}, {self.year}"
 
 
-#     def pickle_that_shit(self, file_path=''):
-
-#         if file_path[-4:] != '.pkl':
-#             if '.' in file_path:
-#                 file_path = file_path.split('.')[0]
-
-#             file_path = file_path + '.pkl'
-
-#         with open(file_path, 'wb') as outp:
-#     company1 = Company('banana', 40)
-#     pickle.dump(company1, outp, pickle.HIGHEST_PROTOCOL)
-
-#     company2 = Company('spam', 42)
-#     pickle.dump(company2, outp, pickle.HIGHEST_PROTOCOL)
-
-# class Company(object):
-#     def __init__(self, name, value):
-#         self.name = name
-#         self.value = value
-
-
-# del company1
-# del company2
-
-# with open('company_data.pkl', 'rb') as inp:
-#     company1 = pickle.load(inp)
-#     print(company1.name)  # -> banana
-#     print(company1.value)  # -> 40
-
-#     company2 = pickle.load(inp)
-#     print(company2.name) # -> spam
-#     print(company2.value)  # -> 42
-
-
 class Player(PlayerSearch):
 
     def __init__(self, search_name=None, url=None, is_active=False, year=dt.today().year):

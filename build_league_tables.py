@@ -1,6 +1,7 @@
 from general_scrape import events_list
 from postgres import insert_event
 from league import Player
+import pandas as pd
 
 
 def event_scraper(year, wait_time=1, to_print=False):
@@ -58,6 +59,7 @@ for year in years_to_pull:
 
     for event in events:
         all_events.append(event)
+        event.results_df.to_csv(f'data/{event.official_name}', index=False)
         insert_event(event, to_print=True)
 
 
@@ -79,8 +81,33 @@ for link in player_links:
         players.append(Player(url=link))
     except:
         # print(link)
+        players.append({
+            'PlayerID': link.split('/')[-1],
+            'PlayerName': None,
+            'PlayerRating': 0,
+            'PlayerURL': link,
+            'IsActive': None,
+            'IsOnTeam': None
+        })
         player_errors.append(link)
     time.sleep(0.5)
 
 print('Number of players:', len(players))
 print('Number of errors:', len(player_errors))
+
+all_players_data = []
+for player in players:
+    if type(player) == dict:
+        all_players_data.append(player)
+    else:
+        all_players_data.append({
+            'PlayerID': player.pdga_number,
+            'PlayerName': player.official_name,
+            'PlayerRating': player.rating,
+            'PlayerURL': player.url,
+            'IsActive': None,
+            'IsOnTeam': None
+        })
+
+players_df = pd.DataFrame(all_players_data)
+players_df.to_csv('data/Players.csv', index=False)
