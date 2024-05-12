@@ -3,6 +3,7 @@ import streamlit as st
 from live_scrape import score_it # live_scorer, current_player_score
 from teams import teams
 
+
 # title
 st.title('CIRCLE ONE')
 st.header('INNOVA OUR HEADS')
