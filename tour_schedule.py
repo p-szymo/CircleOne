@@ -52,12 +52,12 @@ def schedule_2024():
             'EVENT_NAME': 'Dynamic Discs Open',
             'EVENT_NUMBER': 77763,
             'START_DATE': '2024-05-03',
-            'END_DATE': '2024-05-11'
+            'END_DATE': '2024-05-05'
         },
         {
             'EVENT_NAME': 'OTB Open',
             'EVENT_NUMBER': 77764,
-            'START_DATE': '2024-05-17',
+            'START_DATE': '2024-05-11',
             'END_DATE': '2024-05-19'
         },
         {
@@ -167,27 +167,3 @@ def event_status(schedule):
             message = f"""NEXT EVENT - TOUR STOP #{next_event_number} - {next_event['EVENT_NAME']}
 ### Check back on {datestring} at noon"""
             return next_event['EVENT_NUMBER'], message
-
-
-print(event_status(tour))
-
-
-
-
-
-
-    # tour_number = i+1
-    # event_name = event['EVENT_NAME']
-    # event_number = event['EVENT_NUMBER']
-    # start_date = event['START_DATE']
-    # end_date = event['END_DATE']
-    # start_live_results = datetime.strptime(start_date, "%Y-%m-%d") + timedelta(hours=12)
-    # end_live_results = datetime.strptime(end_date, "%Y-%m-%d") + timedelta(days=3, hours=12)
-    # start_string = start_live_results.strftime("%Y-%m-%d %I:%M%p")
-    # end_string = end_live_results.strftime("%Y-%m-%d %I:%M%p")
-    #
-    # print(f'Tour stop #{tour_number}: {event_name}')
-    # print(f'Start date: {start_date}')
-    # print(f'End date: {end_date}')
-    # print(f'Results available between: {start_string} and {end_string}')
-    # print()
