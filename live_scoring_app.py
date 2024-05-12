@@ -16,6 +16,10 @@ st.markdown('')
 
 event_number, status = event_status(schedule_2024())
 
+st.markdown('')
+st.markdown('## ' + status)
+st.markdown('')
+
 if status.split(' ')[0] == 'CURRENT':
     if st.button('Show me the scores!'):
 
@@ -37,8 +41,3 @@ if status.split(' ')[0] == 'CURRENT':
         st.markdown('')
         st.markdown('# PLAYER TOTALS')
         st.text(team_scores_by_player)
-
-else:
-    # format blank space
-    st.markdown('')
-    st.markdown('## ' + status)
