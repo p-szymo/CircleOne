@@ -1,6 +1,6 @@
-streamlit==1.34.0
-selenium==3.141.0
-beautifulsoup4==4.12.3
+streamlit
+selenium
+beautifulsoup4
 seleniumbase
 webdriver-manager
 # pandas==1.1.5
