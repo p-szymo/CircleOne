@@ -14,25 +14,27 @@ def event_scraper(year, wait_time=1, to_print=False):
     events_df = pd.DataFrame(columns=['EventID', 'PlayerID', 'Place', 'Score'])
     events_mapping_df = pd.DataFrame(columns=['EventID', 'EventName', 'Year'])
 
-    for event_name, link in event_details:
-        try:
-            e = Event(name=event_name, url=link, year=year)
-            events.append(e)
-            events_df = pd.concat([events_df, e.results_df], ignore_index=True)
-            events_mapping_df = pd.concat(
-                [
-                    events_mapping_df,
-                    pd.DataFrame({
+    for i, (event_name, link) in enumerate(event_details):
+        # try:
+        e = Event(name=event_name, url=link, year=year)
+        events.append(e)
+        events_df = pd.concat([events_df, e.results_df], ignore_index=True)
+        events_mapping_df = pd.concat(
+            [
+                events_mapping_df,
+                pd.DataFrame(
+                    [{
                         'EventID': e.pdga_event_number,
                         'EventName': e.official_name,
                         'Year': year
-                    })
-                ],
-                ignore_index=True
-            )
-        except:
-            if to_print: print('ERROR: link')
-            events_errors.append(link)
+                    }]
+                )
+            ],
+            ignore_index=True
+        )
+        # except:
+        #     if to_print: print('ERROR: link')
+        #     events_errors.append(link)
         time.sleep(wait_time)
 
     return events, events_errors, events_df, events_mapping_df
@@ -59,8 +61,6 @@ def player_scraper(pdga_number, wait_time=1, to_print=False):
 
     return player
 
-    print('Number of players:', len(players))
-    print('Number of errors:', len(player_errors))
 
 ########################
 # SCRAPE/INSERT EVENTS #
@@ -74,7 +74,9 @@ years_to_pull = [2023, 2024]
 all_events = []
 for year in years_to_pull:
     events, events_errors, events_df, events_mapping_df = event_scraper(year, wait_time=0.5, to_print=False)
-    print(f'''{year} events: {len(events)} | {year} errors: {len(events_errors)} ''')
+    print(f'{year} events: {len(events)} | {year} errors: {len(events_errors)}')
+
+    all_events += events
 
     all_events_df = pd.concat([all_events_df, events_df], ignore_index=True)
     all_events_mapping_df = pd.concat([all_events_mapping_df, events_mapping_df], ignore_index=True)
@@ -93,7 +95,7 @@ all_events_mapping_df.to_csv('data/Events.csv', index=False)
 # SCRAPE/INSERT PLAYERS #
 #########################
 
-pdga_numbers_by_event = [event.results_df['PDGA Number'].values for event in all_events]
+pdga_numbers_by_event = [event.results_df['PlayerID'].values for event in all_events if not event.results_df.empty]
 
 pdga_numbers = list(set([number for event in pdga_numbers_by_event for number in event]))
 

@@ -48,11 +48,11 @@ class Event(EventSearch):
 
         self.create_table_query = create_table(self.table_name, event_table_dict())
 
-        self.insert_values_query = insert_data(
-            self.table_name,
-            event_table_dict(),
-            self.results_df.to_dict('records')
-        )
+        # self.insert_values_query = insert_data(
+        #     self.table_name,
+        #     event_table_dict(),
+        #     self.results_df.to_dict('records')
+        # )
 
     def __repr__(self):
         return self.official_name
@@ -64,12 +64,18 @@ class Event(EventSearch):
             score = "DNF"
         else:
             score = "ERROR"
-        result = {  # could also do round scores, round ratings, and total score
-            'EventID': int(self.pdga_event_number),
-            'PlayerID': int(row.select_one('td[class*="pdga-number"]').text),
-            'Place': int(row.select_one('td[class*="place"]').text),
-            'Score': score,
-        }
+
+        try:
+            result = {  # could also do round scores, round ratings, and total score
+                'EventID': int(self.pdga_event_number),
+                'PlayerID': int(row.select_one('td[class*="pdga-number"]').text),
+                'Place': int(row.select_one('td[class*="place"]').text),
+                'Score': score,
+            }
+
+        except:
+            result = {}
+
         return result
 
     def event_parser(self, url):
@@ -80,7 +86,7 @@ class Event(EventSearch):
         odd_rows = results_table_raw.select('tr[class*="odd"]')
         even_rows = results_table_raw.select('tr[class*="even"]')
         results_raw = [x for x in itertools.chain.from_iterable(itertools.zip_longest(odd_rows, even_rows)) if x]
-        results_list = [self.row_parser(row) for row in results_raw]
+        results_list = [self.row_parser(row) for row in results_raw if self.row_parser(row)]
         results_df = pd.DataFrame(data=results_list)  # .set_index('Place')
 
         return results_df
@@ -592,4 +598,4 @@ WHERE "Team Name"='{self.name}'
         return None
 
 
-print(Player(url="https://www.pdga.com/player/75412").__dict__)
+# print(Player(url="https://www.pdga.com/player/75412").__dict__)

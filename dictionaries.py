@@ -2,22 +2,21 @@
 
 def event_table_dict():
     return {
+        'EventID': 'bigint',
+        'PlayerID': 'bigint',
         'Place': 'int',
-        'Player': 'varchar(200)',
-        'PDGA Number': 'bigint',
-        'Player Rating': 'int',
         'Score': 'varchar(10)'
     }
 
 
 def player_table_dict():
     return {
-        'Name': 'varchar(200)',
-        'PDGA Number': 'bigint',
-        'Event Name': 'varchar(500)',
-        'Place': 'int',
-        'Event Year': 'int',
-        'Event Status': 'varchar(50)'
+        'PlayerID': 'bigint',
+        'PlayerName': 'varchar(200)',
+        'PlayerRating': 'int',
+        'PlayerURL': 'varchar(500)',
+        'IsActive': 'boolean',
+        'IsOnTeam': 'boolean'
     }
 
 
