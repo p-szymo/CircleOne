@@ -60,7 +60,8 @@ def live_scorer(event_id, wait_time=5):
 
         event_results[player_name] = {'place': player_place, 'dnf': dnf}
 
-    event_results['Josh'] = {'place': 1, 'dnf': False}
+    # testing round 1 before everyone starts
+    # event_results['Josh'] = {'place': 1, 'dnf': False}
 
     return event_results
 
@@ -139,7 +140,7 @@ def score_it(league, event_number, wait_time=5, to_print=False):
     else:
         # at least one player doesn't have a place value
         if not min(places):
-            prologue = '***** NOTE: Results may be incomplete... *****\n\n'
+            prologue = '***** NOTE: Results may be incomplete *****\n\n'
 
         scores = {}
         team_results = {}
