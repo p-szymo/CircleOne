@@ -57,7 +57,7 @@ def schedule_2024():
         {
             'EVENT_NAME': 'OTB Open',
             'EVENT_NUMBER': 77764,
-            'START_DATE': '2024-05-17',
+            'START_DATE': '2024-05-14',
             'END_DATE': '2024-05-19'
         },
         {
