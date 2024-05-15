@@ -35,20 +35,29 @@ def live_scorer(event_id, wait_time=5):
     soup = bs(html, 'html.parser')
     rows = soup.select('div[class="table-row"]')
 
-    for row in rows:
+    for i, row in enumerate(rows):
         player_first_name = row.select_one('span[class="player-first-name"]').text
         player_last_name = row.select_one('span[class="player-last-name"]').text
         player_name = player_first_name + ' ' + player_last_name
         player_place_raw = row.select_one('span[class*="py-2"]').text
-        if player_place_raw[0] == 'T':
-            player_place = int(player_place_raw[1:])
+
+        if player_place_raw:
+            if player_place_raw[0] == 'T':
+                player_place = int(player_place_raw[1:])
+            else:
+                player_place = int(player_place_raw)
+
+            par = row.select_one('div[class="label-1-semibold"]')
+
+            if par:
+                dnf = par.text.upper() == 'DNF'
+            else:
+                dnf = False
+
         else:
-            player_place = int(player_place_raw)
-        par = row.select_one('div[class="label-1-semibold"]')
-        if par:
-            dnf = par.text.upper() == 'DNF'
-        else:
+            player_place = 0
             dnf = False
+
         event_results[player_name] = {'place': player_place, 'dnf': dnf}
 
     return event_results
@@ -117,48 +126,54 @@ def current_team_score(results, team):
 
 def score_it(league, event_number, wait_time=5, to_print=False):
     results = live_scorer(event_number, wait_time=wait_time)
-    scores = {}
-    team_results = {}
 
-    for team in league:
-        owner = team['owner']
+    if not sum([v['player_place'] for k,v in results.items()]):
+        league_print_string = 'There are no results yet.'
+        teams_print_string = ''
 
-        score, not_playing, dnf, team_result = current_team_score(results, team)
+    else:
+        scores = {}
+        team_results = {}
 
-        if not_playing:
-            addenda = ' # not playing: ' + ' | '.join(not_playing)
-        else:
-            addenda = ''
+        for team in league:
+            owner = team['owner']
 
-        if dnf:
-            addenda += ' # did not finish: ' + ' | '.join(dnf)
+            score, not_playing, dnf, team_result = current_team_score(results, team)
 
-        scores[owner] = {'score': score, 'addenda': addenda}
-        team_results[owner] = team_result
+            if not_playing:
+                addenda = ' # not playing: ' + ' | '.join(not_playing)
+            else:
+                addenda = ''
 
-    sorted_scores = {k: v for k, v in sorted(scores.items(), key=lambda item: item[1]['score'])}
+            if dnf:
+                addenda += ' # did not finish: ' + ' | '.join(dnf)
 
-    printout = []
+            scores[owner] = {'score': score, 'addenda': addenda}
+            team_results[owner] = team_result
 
-    for owner, score in sorted_scores.items():
-        line = f"{owner}: {str(score['score'])}{score['addenda']}"
-        printout.append(line)
+        sorted_scores = {k: v for k, v in sorted(scores.items(), key=lambda item: item[1]['score'])}
 
-    league_print_string = '\n'.join(printout)
-    if to_print: print(league_print_string + '\n')
+        printout = []
 
-    full_printout = []
-    for owner, team_result in team_results.items():
-        sorted_results = {k: v for k, v in sorted(team_result.items(), key=lambda item: item[1])}
-        full_printout.append('\n' + owner)
-        if to_print: print(owner)
-        for player, score in sorted_results.items():
-            player_score = f'{player}: {score}'
-            full_printout.append(player_score)
-            if to_print: print(player_score)
+        for owner, score in sorted_scores.items():
+            line = f"{owner}: {str(score['score'])}{score['addenda']}"
+            printout.append(line)
 
-    teams_print_string = '\n'.join(full_printout)
-    if to_print: print(teams_print_string)
+        league_print_string = '\n'.join(printout)
+        if to_print: print(league_print_string + '\n')
+
+        full_printout = []
+        for owner, team_result in team_results.items():
+            sorted_results = {k: v for k, v in sorted(team_result.items(), key=lambda item: item[1])}
+            full_printout.append('\n' + owner)
+            if to_print: print(owner)
+            for player, score in sorted_results.items():
+                player_score = f'{player}: {score}'
+                full_printout.append(player_score)
+                if to_print: print(player_score)
+
+        teams_print_string = '\n'.join(full_printout)
+        if to_print: print(teams_print_string)
 
     return league_print_string, teams_print_string
 
@@ -167,6 +182,6 @@ def score_it(league, event_number, wait_time=5, to_print=False):
 # TESTING #
 ###########
 # league = teams()
-# event_number = 77763
+# event_number = 77764
 #
 # score_it(league, event_number, to_print=True)
