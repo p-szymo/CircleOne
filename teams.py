@@ -1,112 +1,114 @@
-# TEAMS AS OF MAY 6
+# TEAMS AS OF MAY 15
 
 def teams():
     return [
-    {
-        'owner': 'BRITT',
-        'starters': [
-            'Gannon Buhr',
-            'Bradley Williams',
-            'Aaron Gossage',
-            'Chris Clemons',
-            'Matt Bell',
-        ],
-        'bench': [
-            'Nikko Locastro',
-            'James Proctor',
-            'Robert Burridge',
-        ]
-    },
-    {
-        'owner': 'DEREK',
-        'starters': [
-            'Isaac Robinson',
-            'Joseph Anderson',
-            'Richard Wysocki',
-            'Luke Humphries',
-            'Gavin Rathbun',
-        ],
-        'bench': [
-            'Väinö Mäkelä',
-            'Garrett Gurthie',
-            'Jesse Nieminen'
-        ]
-    },
-    {
-        'owner': 'ERIC',
-        'starters': [
-            'Calvin Heimburg',
-            'Joel Freeman',
-            'Andrew Presnell',
-            'Emerson Keith',
-            'Luke Taylor'
-        ],
-        'bench': [
-            'Niklas Anttila',
-            'Adam Hammes',
-            'Evan Smith',
-            'Parker Welck'
-        ]
-    },
-    {
-        'owner': 'JOSH',
-        'starters': [
-            'Matthew Orum',
-            'Chris Dickerson',
-            'Ezra Robinson',
-            'Paul Krans',
-            'Paul Ulibarri'
-        ],
-        'bench': [
-            'James Conrad',
-            'Jakub Semerád',
-            'Jake Hebenheimer'
-        ]
-    },
-    {
-        'owner': 'SAM',
-        'starters': [
-            'Paul McBeth',
-            'Anthony Barela',
-            'Benjamin Callaway',
-            'Gavin Babcock',
-            'Grady Shue'
-        ],
-        'bench': [
-            'Cale Leiviska',
-            'Corey Ellis',
-            'Nathan Sexton'
-        ]
-    },
-    {
-        'owner': 'TAYLOR',
-        'starters': [
-            'Cole Redalen',
-            'Ezra Aderhold',
-            'Scott Withers',
-            'Austin Turner',
-            'Kevin Jones'
-        ],
-        'bench': [
-            'Jeremy Koling',
-            'Casey White',
-            'Lauri Lehtinen',
-            'Eagle McMahon'
-        ]
-    },
-    {
-        'owner': 'TIM',
-        'starters': [
-            'Kyle Klein',
-            'Mason Ford',
-            'Alden Harris',
-            'Andrew Marwede',
-            'Albert Tamm'
-        ],
-        'bench': [
-            'Simon Lizotte',
-            'Joona Heinänen',
-            'Nate Hecker'
-        ]
-    }
-]
+        {
+            'owner': 'BRITT',
+            'starters': [
+                'Gannon Buhr',
+                'James Proctor',
+                'Aaron Gossage',
+                'Bradley Williams',
+                'Matt Bell',
+            ],
+            'bench': [
+                'Chris Clemons',
+                'Robert Burridge',
+                'Nikko Locastro',
+            ]
+        },
+        {
+            'owner': 'DEREK',
+            'starters': [
+                'Richard Wysocki',
+                'Isaac Robinson',
+                'Joseph Anderson',
+                'Gavin Rathbun',
+                'Garrett Gurthie',
+            ],
+            'bench': [
+                'Väinö Mäkelä',
+                'Luke Humphries',
+                'Jesse Nieminen',
+            ]
+        },
+        {
+            'owner': 'ERIC',
+            'starters': [
+                'Calvin Heimburg',
+                'Niklas Anttila',
+                'Emerson Keith',
+                'Eric Oakley',
+                'Sullivan Tipton',
+            ],
+            'bench': [
+                'Joel Freeman',
+                'Andrew Presnell',
+                'Evan Scott',
+            ],
+            'injured_reserve': 'Adam Hammes'
+        },
+        {
+            'owner': 'JOSH',
+            'starters': [
+                'Matthew Orum',
+                'Ezra Robinson',
+                'Paul Ulibarri',
+                'James Conrad',
+                'Jake Hebenheimer',
+            ],
+            'bench': [
+                'Chris Dickerson',
+                'Jakub Semerád',
+                'Chandler Kramer',
+            ],
+            'injured_reserve': 'Paul Krans'
+        },
+        {
+            'owner': 'SAM',
+            'starters': [
+                'Anthony Barela',
+                'Paul McBeth',
+                'Benjamin Callaway',
+                'Gavin Babcock',
+                'Grady Shue'
+            ],
+            'bench': [
+                'Cale Leiviska',
+                'Corey Ellis',
+                'Nathan Sexton'
+            ],
+            'injured_reserve': 'Adam Hammes'
+        },
+        {
+            'owner': 'TAYLOR',
+            'starters': [
+                'Eagle McMahon',
+                'Cole Redalen',
+                'Ezra Aderhold',
+                'Casey White',
+                'Kevin Jones'
+            ],
+            'bench': [
+                'Scott Withers',
+                'Jeremy Koling',
+                'Austin Turner',
+            ],
+            'injured_reserve': 'Lauri Lehtinen'
+        },
+        {
+            'owner': 'TIM',
+            'starters': [
+                'Kyle Klein',
+                'Mason Ford',
+                'Alden Harris',
+                'Andrew Marwede',
+                'Albert Tamm'
+            ],
+            'bench': [
+                'Simon Lizotte',
+                'Joona Heinänen',
+                'Nate Hecker'
+            ]
+        }
+    ]
