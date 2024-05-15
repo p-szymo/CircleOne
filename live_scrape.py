@@ -60,6 +60,8 @@ def live_scorer(event_id, wait_time=5):
 
         event_results[player_name] = {'place': player_place, 'dnf': dnf}
 
+    event_results['Josh'] = {'place': 1, 'dnf': False}
+
     return event_results
 
 
@@ -134,11 +136,11 @@ def score_it(league, event_number, wait_time=5, to_print=False):
         league_print_string = 'There are no results yet.'
         teams_print_string = ''
 
-    # at least one player doesn't have a place value
-    elif not min(places):
-        prologue = '#### NOTE: Results may be incomplete...\n'
-
     else:
+        # at least one player doesn't have a place value
+        if not min(places):
+            prologue = '#### NOTE: Results may be incomplete...\n'
+
         scores = {}
         team_results = {}
 
@@ -180,7 +182,8 @@ def score_it(league, event_number, wait_time=5, to_print=False):
                 if to_print: print(player_score)
 
         teams_print_string = '\n'.join(full_printout)
-        if to_print: print(teams_print_string)
+        if to_print:
+            print(teams_print_string)
 
     return league_print_string, teams_print_string
 
