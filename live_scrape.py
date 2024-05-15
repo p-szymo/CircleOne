@@ -127,7 +127,7 @@ def current_team_score(results, team):
 def score_it(league, event_number, wait_time=5, to_print=False):
     results = live_scorer(event_number, wait_time=wait_time)
 
-    if not sum([v['player_place'] for k,v in results.items()]):
+    if not sum([v['place'] for k,v in results.items()]):
         league_print_string = 'There are no results yet.'
         teams_print_string = ''
 
