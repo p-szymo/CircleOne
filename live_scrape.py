@@ -125,11 +125,18 @@ def current_team_score(results, team):
     return total_score, not_playing, dnf, team_results
 
 def score_it(league, event_number, wait_time=5, to_print=False):
-    results = live_scorer(event_number, wait_time=wait_time)
 
-    if not sum([v['place'] for k,v in results.items()]):
+    prologue = ''
+    results = live_scorer(event_number, wait_time=wait_time)
+    places = [v['place'] for k,v in results.items()]
+
+    if not sum(places):
         league_print_string = 'There are no results yet.'
         teams_print_string = ''
+
+    # at least one player doesn't have a place value
+    elif not min(places):
+        prologue = '#### NOTE: Results may be incomplete...\n'
 
     else:
         scores = {}
@@ -159,7 +166,7 @@ def score_it(league, event_number, wait_time=5, to_print=False):
             line = f"{owner}: {str(score['score'])}{score['addenda']}"
             printout.append(line)
 
-        league_print_string = '\n'.join(printout)
+        league_print_string = prologue + '\n'.join(printout)
         if to_print: print(league_print_string + '\n')
 
         full_printout = []
