@@ -139,7 +139,7 @@ def score_it(league, event_number, wait_time=5, to_print=False):
     else:
         # at least one player doesn't have a place value
         if not min(places):
-            prologue = '#### NOTE: Results may be incomplete...\n'
+            prologue = '***** NOTE: Results may be incomplete... *****\n\n'
 
         scores = {}
         team_results = {}
