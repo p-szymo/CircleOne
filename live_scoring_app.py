@@ -5,8 +5,12 @@ from teams import teams
 from tour_schedule import event_status, schedule_2024
 
 # title
-st.image('img/shitty_logo.png', width=150)
-st.title('CIRCLE ONE')
+col1, mid, col2 = st.beta_columns([1,1,20])
+with col1:
+    st.image('img/shitty_logo.png', width=150)
+with col2:
+    st.title('CIRCLE ONE')
+
 st.header('INNOVA OUR HEADS')
 
 league = teams()
