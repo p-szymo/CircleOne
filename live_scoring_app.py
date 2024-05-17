@@ -9,7 +9,7 @@ col1, col2 = st.columns([0.35,0.65])
 with col1:
     st.title('CIRCLE ONE')
 with col2:
-    st.image('img/shitty_logo.png', width=30)
+    st.image('img/shitty_logo.png', width=40)
 
 st.header('INNOVA OUR HEADS')
 
