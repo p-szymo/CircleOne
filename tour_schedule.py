@@ -58,7 +58,8 @@ def schedule_2024():
             'EVENT_NAME': 'OTB Open',
             'EVENT_NUMBER': 77764,
             'START_DATE': '2024-05-17',
-            'END_DATE': '2024-05-19'
+            'END_DATE': '2024-05-19',
+            'START_TIME': 13.5  # number of hours past midnight
         },
         {
             'EVENT_NAME': 'Portland Open',
@@ -118,12 +119,12 @@ def schedule_2024():
 
 tour = schedule_2024()
 
-def is_live(event):
+def is_live(event, start_time=12):
 
     start_date = event['START_DATE']
     end_date = event['END_DATE']
     start_live_results = tz.localize(
-        datetime.strptime(start_date, "%Y-%m-%d") + timedelta(hours=12),
+        datetime.strptime(start_date, "%Y-%m-%d") + timedelta(hours=start_time),
         is_dst=None
     )
     end_live_results = tz.localize(
@@ -135,18 +136,18 @@ def is_live(event):
 
 
 
-def is_future_event(event):
+def is_future_event(event, start_time=12):
 
     start_date = event['START_DATE']
     start_live_results = tz.localize(
-        datetime.strptime(start_date, "%Y-%m-%d") + timedelta(hours=12),
+        datetime.strptime(start_date, "%Y-%m-%d") + timedelta(hours=start_time),
         is_dst=None
     )
 
     return right_now <= start_live_results
 
 
-def event_status(schedule):
+def event_status(schedule, start_time=13.5):
 
     next_event = {
         'EVENT_NUMBER': 0,
@@ -155,15 +156,15 @@ def event_status(schedule):
     next_event_number = -1
 
     for i, event in enumerate(schedule):
-        if is_live(event):
+        if is_live(event, start_time=start_time):
             return event['EVENT_NUMBER'], f"CURRENT EVENT - TOUR STOP #{i+1} - {event['EVENT_NAME']}"
 
     for i, event in enumerate(reversed(schedule)):
-        if is_future_event(event):
+        if is_future_event(event, start_time=start_time):
             next_event = event
             next_event_number = len(schedule) - i
         else:
             datestring = datetime.strptime(next_event['START_DATE'], "%Y-%m-%d").strftime("%B %-d")
             message = f"""NEXT EVENT - TOUR STOP #{next_event_number} - {next_event['EVENT_NAME']}
-### Check back on {datestring} at noon"""
+### Check back on {datestring} at 1:30pm Eastern"""
             return next_event['EVENT_NUMBER'], message
