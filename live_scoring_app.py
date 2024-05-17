@@ -5,9 +5,9 @@ from teams import teams
 from tour_schedule import event_status, schedule_2024
 
 # title
-col1, col2 = st.columns([0.2, 0.8])
+col1, col2 = st.columns([0.15, 0.85])
 with col1:
-    st.image('img/shitty_logo.png', width=100)
+    st.image('img/shitty_logo.png', width=90)
 with col2:
     st.title('CIRCLE ONE')
 
