@@ -7,7 +7,7 @@ from tour_schedule import event_status, schedule_2024
 # title
 col1, col2 = st.columns([0.3, 0.7])
 with col1:
-    st.image('img/shitty_logo.png', width=150)
+    st.image('img/shitty_logo.png', width=50)
 with col2:
     st.title('CIRCLE ONE')
 
