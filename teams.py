@@ -69,14 +69,14 @@ def teams():
             'starters': [
                 'Anthony Barela',
                 'Paul McBeth',
-                'Benjamin Callaway',
                 'Gavin Babcock',
-                'Connor Rock'
+                'Ty Love',
+                'Connor Rock',
             ],
             'bench': [
-                'Cale Leiviska',
                 'Corey Ellis',
-                'Nathan Sexton'
+                'Benjamin Callaway',
+                'Nathan Sexton',
             ],
             'injured_reserve': 'Brodie Smith'
         },
