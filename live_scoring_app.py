@@ -19,7 +19,7 @@ wait_time = 2
 # format blank space
 st.markdown('')
 
-event_number, status = event_status(schedule_2024(), start_time=12)
+event_number, status = event_status(schedule_2024(), start_time=13.5)
 
 st.markdown('## ' + status)
 st.markdown('')
