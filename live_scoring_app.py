@@ -6,6 +6,7 @@ from tour_schedule import event_status, schedule_2024
 
 # title
 st.title('CIRCLE ONE')
+st.image('img/shitty_logo.png', width=150)
 st.header('INNOVA OUR HEADS')
 
 league = teams()

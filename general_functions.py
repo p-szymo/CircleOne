@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
+import pandas as pd
 
 
 def soupify(url, _type="html.parser"):
@@ -70,3 +71,21 @@ def insert_data(table_name, table_columns, data, truncate=True):
 VALUES {insert_values}'''
 
     return insert_query
+
+
+def second_tuesdays(start_date='2024-01-01', end_date='2029-12-31'):
+
+    df = pd.DataFrame(
+        {'Date': pd.date_range(start=start_date, end=end_date, freq='d')}
+    )
+
+    df['is_second_tuesday'] = (
+            (df['Date'].dt.weekday == 1) &  # select Tuesday
+            (df['Date'].dt.day > 7) &  # exclude first
+            (df['Date'].dt.day <= 14)  # exclude third etc.
+    )
+
+    return list(df['Date'][df['is_second_tuesday']].values)
+
+
+print(second_tuesdays())
