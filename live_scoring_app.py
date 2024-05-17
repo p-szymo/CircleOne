@@ -5,7 +5,7 @@ from teams import teams
 from tour_schedule import event_status, schedule_2024
 
 # title
-col1, col2, col3 = st.columns([0.15,0.4,0.45])
+col1, col2, col3 = st.columns([0.15,0.3,0.55])
 with col1:
     st.image('img/shitty_logo.png', width=95)
 with col2:
