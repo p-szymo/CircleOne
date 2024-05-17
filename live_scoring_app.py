@@ -5,7 +5,7 @@ from teams import teams
 from tour_schedule import event_status, schedule_2024
 
 # title
-col1, col2 = st.columns([0.85, 0.15])
+col1, col2 = st.columns(2)
 with col1:
     st.title('CIRCLE ONE')
 with col2:
