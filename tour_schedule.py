@@ -147,7 +147,7 @@ def is_future_event(event, start_time=12):
     return right_now <= start_live_results
 
 
-def event_status(schedule, start_time=13.5):
+def event_status(schedule, start_time=12):
 
     next_event = {
         'EVENT_NUMBER': 0,
