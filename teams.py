@@ -71,14 +71,14 @@ def teams():
                 'Paul McBeth',
                 'Benjamin Callaway',
                 'Gavin Babcock',
-                'Grady Shue'
+                'Connor Rock'
             ],
             'bench': [
                 'Cale Leiviska',
                 'Corey Ellis',
                 'Nathan Sexton'
             ],
-            'injured_reserve': 'Adam Hammes'
+            'injured_reserve': 'Brodie Smith'
         },
         {
             'owner': 'TAYLOR',
@@ -99,16 +99,16 @@ def teams():
         {
             'owner': 'TIM',
             'starters': [
-                'Kyle Klein',
-                'Mason Ford',
                 'Alden Harris',
                 'Andrew Marwede',
-                'Albert Tamm'
+                'Joona Heinänen',
+                'Albert Tamm',
+                'Drew Gibson',
             ],
             'bench': [
+                'Kyle Klein',
                 'Simon Lizotte',
-                'Joona Heinänen',
-                'Nate Hecker'
+                'Mason Ford',
             ]
         }
     ]
