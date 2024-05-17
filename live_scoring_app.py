@@ -5,11 +5,11 @@ from teams import teams
 from tour_schedule import event_status, schedule_2024
 
 # title
-col1, col2 = st.columns([0.1, 0.9])
+col1, col2 = st.columns([0.2, 0.8])
 with col1:
-    st.image('img/shitty_logo.png', width=60)
+    st.image('img/shitty_logo.png', width=100)
 with col2:
-    st.markdown('# CIRCLE ONE')
+    st.title('CIRCLE ONE')
 
 st.header('INNOVA OUR HEADS')
 
