@@ -136,7 +136,10 @@ def is_live(event, start_time=12, time_zone='US/Eastern'):
 
 
 
-def is_future_event(event, start_time=12):
+def is_future_event(event, start_time=12, time_zone='US/Eastern'):
+
+    tz = pytz.timezone(time_zone)
+    right_now = datetime.now(tz)
 
     start_date = event['START_DATE']
     start_live_results = tz.localize(
@@ -166,5 +169,5 @@ def event_status(schedule, start_time=12):
         else:
             datestring = datetime.strptime(next_event['START_DATE'], "%Y-%m-%d").strftime("%B %-d")
             message = f"""NEXT EVENT - TOUR STOP #{next_event_number} - {next_event['EVENT_NAME']}
-### Check back on {datestring} at 1:30pm Eastern"""
+### Check back on {datestring} at noon"""
             return next_event['EVENT_NUMBER'], message
