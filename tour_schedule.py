@@ -1,11 +1,6 @@
 from datetime import datetime, timedelta
 import pytz
 
-def now():
-    tz = pytz.timezone('US/Eastern')
-    right_now = datetime.now(tz)
-    return right_now
-
 def schedule_2024():
     return [
         {
@@ -121,9 +116,10 @@ def schedule_2024():
 
 tour = schedule_2024()
 
-def is_live(event, start_time=12):
+def is_live(event, start_time=12, time_zone='US/Eastern'):
 
-    right_now = now()
+    tz = pytz.timezone(time_zone)
+    right_now = datetime.now(tz)
 
     start_date = event['START_DATE']
     end_date = event['END_DATE']
