@@ -57,7 +57,7 @@ def schedule_2024():
         {
             'EVENT_NAME': 'OTB Open',
             'EVENT_NUMBER': 77764,
-            'START_DATE': '2024-05-16',
+            'START_DATE': '2024-05-17',
             'END_DATE': '2024-05-19',
             'START_TIME': 13.5  # number of hours past midnight
         },
@@ -128,7 +128,7 @@ def is_live(event, start_time=12):
         is_dst=None
     )
     end_live_results = tz.localize(
-        datetime.strptime(end_date, "%Y-%m-%d") + timedelta(days=3, hours=12),
+        datetime.strptime(end_date, "%Y-%m-%d") + timedelta(days=3),
         is_dst=None
     )
 
