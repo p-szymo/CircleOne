@@ -13,9 +13,6 @@ with col2:
 
 st.header('INNOVA OUR HEADS')
 
-league = teams()
-wait_time = 2
-
 # format blank space
 st.markdown('')
 
@@ -32,7 +29,7 @@ if status.split(' ')[0] == 'CURRENT':
         data_load_state = st.text('Loading data...')
 
         # generate live scores
-        league_totals, team_scores_by_player = score_it(league, event_number, wait_time)
+        league_totals, team_scores_by_player = score_it(teams(), event_number, wait_time=2)
 
         data_load_state.text("Done!")
 
