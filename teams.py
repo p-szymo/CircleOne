@@ -37,30 +37,30 @@ def teams():
             'starters': [
                 'Calvin Heimburg',
                 'Niklas Anttila',
+                'Andrew Presnell',
+                'Adam Hammes',
                 'Emerson Keith',
-                'Eric Oakley',
-                'Sullivan Tipton',
             ],
             'bench': [
                 'Joel Freeman',
-                'Andrew Presnell',
                 'Evan Scott',
+                'Sullivan Tipton',
             ],
-            'injured_reserve': 'Adam Hammes'
+            'injured_reserve': None
         },
         {
             'owner': 'JOSH',
             'starters': [
-                'Matthew Orum',
                 'Ezra Robinson',
                 'Paul Ulibarri',
                 'James Conrad',
+                'Luke Taylor',
                 'Jake Hebenheimer',
             ],
             'bench': [
+                'Matthew Orum',
                 'Chris Dickerson',
                 'Jakub Semerád',
-                'Chandler Kramer',
             ],
             'injured_reserve': 'Paul Krans'
         },
@@ -90,8 +90,8 @@ def teams():
                 'Kevin Jones'
             ],
             'bench': [
-                'Scott Withers',
                 'Jeremy Koling',
+                'Scott Withers',
                 'Austin Turner',
             ],
             'injured_reserve': 'Lauri Lehtinen'
@@ -99,16 +99,16 @@ def teams():
         {
             'owner': 'TIM',
             'starters': [
+                'Simon Lizotte',
+                'Kyle Klein',
                 'Alden Harris',
                 'Andrew Marwede',
-                'Joona Heinänen',
-                'Albert Tamm',
                 'Drew Gibson',
             ],
             'bench': [
-                'Kyle Klein',
-                'Simon Lizotte',
                 'Mason Ford',
+                'Joona Heinänen',
+                'Albert Tamm',
             ]
         }
     ]
