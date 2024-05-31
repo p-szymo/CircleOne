@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup as bs
-from teams import teams
+# from teams import teams
 import time
 import streamlit as st
 from selenium import webdriver
