@@ -12,6 +12,7 @@ with col2:
     st.image('img/shitty_logo_v2.png', width=90)
 
 st.header('INNOVA OUR HEADS')
+st.markdown('TESTING THIS SHIT')
 
 # format blank space
 st.markdown('')
