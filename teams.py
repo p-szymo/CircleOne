@@ -24,11 +24,11 @@ def teams():
                 'Isaac Robinson',
                 'Joseph Anderson',
                 'Gavin Rathbun',
-                'Garrett Gurthie',
+                'Luke Humphries',
             ],
             'bench': [
                 'Väinö Mäkelä',
-                'Luke Humphries',
+                'Garrett Gurthie',
                 'Jesse Nieminen',
             ]
         },
@@ -39,11 +39,11 @@ def teams():
                 'Niklas Anttila',
                 'Andrew Presnell',
                 'Adam Hammes',
-                'Emerson Keith',
+                'Evan Scott',
             ],
             'bench': [
                 'Joel Freeman',
-                'Evan Scott',
+                'Emerson Keith',
                 'Sullivan Tipton',
             ],
             'injured_reserve': None
@@ -58,8 +58,8 @@ def teams():
                 'Jake Hebenheimer',
             ],
             'bench': [
-                'Matthew Orum',
                 'Chris Dickerson',
+                'Matthew Orum',
                 'Jakub Semerád',
             ],
             'injured_reserve': 'Paul Krans'
@@ -86,12 +86,12 @@ def teams():
                 'Eagle McMahon',
                 'Cole Redalen',
                 'Ezra Aderhold',
+                'Jeremy Koling',
                 'Casey White',
-                'Kevin Jones'
             ],
             'bench': [
-                'Jeremy Koling',
-                'Scott Withers',
+                'Nathan Doss',
+                'Kevin Jones'
                 'Austin Turner',
             ],
             'injured_reserve': 'Lauri Lehtinen'
