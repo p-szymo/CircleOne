@@ -1,5 +1,5 @@
 import requests
-from league import update_player_rating
+from league import update_player_rating, event_parser
 from creds import backendless_creds
 
 api_creds = backendless_creds()
@@ -26,13 +26,14 @@ headers = {
 
 # r = requests.post(url=url, data=data, headers=headers)
 
+# UPDATE PLAYER RATINGS
+# update_player_ratings(domain=domain, table_name='Players', headers=headers)
 
-update_player_ratings(domain=domain, table_name='Players', headers=headers)
+event_url = 'https://www.pdga.com/tour/event/'
+events_to_add = [77764, 77765, 77766]
 
-# Note: json_data will not be serialized by requests
-# exactly as it was in the original request.
-#data = '{"email":"john.smith@foo.bar", "name":"John", "password":"123456seven"}'
-#response = requests.post('https://api.backendless.com/<app-id>/<rest-api-key>/users/register', headers=headers, data=data)
+events = [event_parser(event_url+str(e)) for e in events_to_add]
 
-
-
+print(events[0].head())
+print(events[1].head())
+print(events[2].head())

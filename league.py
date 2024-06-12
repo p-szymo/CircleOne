@@ -7,7 +7,6 @@ from datetime import date as dt
 import re
 from statistics import median
 
-
 def update_player_rating(pdga_number):
     url = f'https://www.pdga.com/player/{pdga_number}'
     _soup = soupify(url)
@@ -19,132 +18,40 @@ def update_player_rating(pdga_number):
 
     return rating
 
-class Event(EventSearch):
 
-    def __init__(self, name=None, url=None, year=dt.today().year, tier=['ES', 'M'], classification=['Pro']):
+def event_row_parser(row):
+    if row.select('td[class*="par"]'):
+        score = row.select('td[class*="par"]')[0].text
+    elif row.select('td[class*="dnf"]'):
+        score = "DNF"
+    else:
+        score = "ERROR"
 
-        self.year = int(year)
+    try:
+        result = {  # could also do round scores, round ratings, and total score
+            'PlayerID': int(row.select_one('td[class*="pdga-number"]').text),
+            'Place': int(row.select_one('td[class*="place"]').text),
+            'Score': score,
+        }
 
-        if not url:
-            self._search_name = name.strip().replace(' ', '%20')
-            self._min_date = f'{self.year}-01-01'
-            self._max_date = f'{self.year}-12-31'
-            self._tier = tier
-            self._classification = classification
+    except:
+        result = {}
 
-            self._search_params = {
-                'event': self._search_name,
-                'date_filter_min': self._min_date,
-                'date_filter_max': self._max_date,
-                'tier': self._tier,
-                'classification': self._classification
-            }
+    return result
 
-            EventSearch.__init__(self, **self._search_params)
+def event_parser(url):
 
-        else:
-            self.url = url
-            self.official_name = name
-            self.pdga_event_number = self.url.split('/')[-1]
+    soup = soupify(url)
+    soup_table = soup.select('div[class*="leaderboard"]')[0]
+    results_table_raw = soup_table.select('div[class*="table-container"]')[0]
+    odd_rows = results_table_raw.select('tr[class*="odd"]')
+    even_rows = results_table_raw.select('tr[class*="even"]')
+    results_raw = [x for x in itertools.chain.from_iterable(itertools.zip_longest(odd_rows, even_rows)) if x]
+    # print(f'Number of rows: {len(results_raw)}')
+    results_list = [event_row_parser(row) for row in results_raw if event_row_parser(row)]
+    results_df = pd.DataFrame(data=results_list)  # .set_index('Place')
 
-        # print(self.url)
-
-        self.table_name = self.event_namer()
-
-        self.results_df = self.event_parser(self.url)
-
-        # _exists, _create, _insert = self.sql_queries()
-
-        self.table_exists_query = table_exists(self.table_name)
-
-        self.create_table_query = create_table(self.table_name, event_table_dict())
-
-        # self.insert_values_query = insert_data(
-        #     self.table_name,
-        #     event_table_dict(),
-        #     self.results_df.to_dict('records')
-        # )
-
-    def __repr__(self):
-        return self.official_name
-
-    def row_parser(self, row):
-        if row.select('td[class*="par"]'):
-            score = row.select('td[class*="par"]')[0].text
-        elif row.select('td[class*="dnf"]'):
-            score = "DNF"
-        else:
-            score = "ERROR"
-
-        try:
-            result = {  # could also do round scores, round ratings, and total score
-                'EventID': int(self.pdga_event_number),
-                'PlayerID': int(row.select_one('td[class*="pdga-number"]').text),
-                'Place': int(row.select_one('td[class*="place"]').text),
-                'Score': score,
-            }
-
-        except:
-            result = {}
-
-        return result
-
-    def event_parser(self, url):
-
-        soup = soupify(url)
-        soup_table = soup.select('div[class*="leaderboard"]')[0]
-        results_table_raw = soup_table.select('div[class*="table-container"]')[0]
-        odd_rows = results_table_raw.select('tr[class*="odd"]')
-        even_rows = results_table_raw.select('tr[class*="even"]')
-        results_raw = [x for x in itertools.chain.from_iterable(itertools.zip_longest(odd_rows, even_rows)) if x]
-        results_list = [self.row_parser(row) for row in results_raw if self.row_parser(row)]
-        results_df = pd.DataFrame(data=results_list)  # .set_index('Place')
-
-        return results_df
-
-    def save_event_results(self, file_path=''):
-
-        file_name = f'Results_{self.official_name.replace(" ", "-")}.csv'
-
-        if len(self.results_df) == 0:
-            print(f'Results for "{self}" do not exist.')
-
-        else:
-            self.results_df.to_csv(file_path + file_name)
-            print(f'{file_name} has been saved.')
-
-        setattr(self, 'file_path', file_path)
-        setattr(self, 'file_name', file_name)
-
-        return None
-
-    def event_namer(self):
-
-        _name = self.official_name \
-            .replace('DGPT', '') \
-            .replace('PDGA', '') \
-            .replace('Elite', '') \
-            .replace('ET#6', '') \
-            .replace('-', '') \
-            .replace('+', '') \
-            .upper().strip()
-
-        if 'PRESENT' in _name:
-            if 'PRESENTED' in _name:
-                event_name = _name.split('PRESENTED')[0].strip()
-            elif 'PRESENTS' in _name:
-                event_name = _name.split('PRESENTS')[-1].strip()
-
-        elif 'POWERED' in _name:
-            event_name = _name.split('POWERED')[0].strip()
-
-        else:
-            event_name = _name.strip()
-
-        event_name = event_name.replace(str(self.year), '').replace('PLAY IT AGAIN SPORTS', '').replace('  ',
-                                                                                                        ' ').strip()
-
-        return f"{event_name}, {self.year}"
+    return results_df
 
 
 class Player(PlayerSearch):
