@@ -1,6 +1,9 @@
 import requests
+from datetime import datetime, timedelta
+import pytz
 from bs4 import BeautifulSoup as bs
 import pandas as pd
+import numpy as np
 
 
 def soupify(url, _type="html.parser"):
@@ -73,6 +76,23 @@ VALUES {insert_values}'''
     return insert_query
 
 
+def to_datetime(date):
+    """ source : https://gist.github.com/blaylockbk/1677b446bc741ee2db3e943ab7e4cabd?permalink_comment_id=3775327
+    Converts a numpy datetime64 object to a python datetime object
+    Input:
+      date - a np.datetime64 object
+    Output:
+      DATE - a python datetime object
+    """
+    if not date:
+        timestamp = 1
+    elif type(date) in [int, float]:
+        timestamp = int(str(date)[:10])
+    else:
+        timestamp = ((date - np.datetime64('1970-01-01T00:00:00')) / np.timedelta64(1, 's'))
+    return datetime.utcfromtimestamp(timestamp)
+
+
 def second_tuesdays(start_date='2024-01-01', end_date='2029-12-31'):
 
     df = pd.DataFrame(
@@ -85,7 +105,4 @@ def second_tuesdays(start_date='2024-01-01', end_date='2029-12-31'):
             (df['Date'].dt.day <= 14)  # exclude third etc.
     )
 
-    return list(df['Date'][df['is_second_tuesday']].values)
-
-
-print(second_tuesdays())
+    return [to_datetime(d) for d in df['Date'][df['is_second_tuesday']].values]

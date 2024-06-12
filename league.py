@@ -8,6 +8,17 @@ import re
 from statistics import median
 
 
+def update_player_rating(pdga_number):
+    url = f'https://www.pdga.com/player/{pdga_number}'
+    _soup = soupify(url)
+    try:
+        rating_raw = _soup.select('li[class*="rating"]')[0].text.strip()
+        rating = int(re.findall(' (\d{3,4}) ', rating_raw)[0])
+    except:
+        rating = -1
+
+    return rating
+
 class Event(EventSearch):
 
     def __init__(self, name=None, url=None, year=dt.today().year, tier=['ES', 'M'], classification=['Pro']):
@@ -166,7 +177,7 @@ class Player(PlayerSearch):
         _soup = soupify(self.url)
 
         try:
-            _name_raw = soup.select('div[class*="pane-page-title"]')[0].text.strip()
+            _name_raw = _soup.select('div[class*="pane-page-title"]')[0].text.strip()
         except:
             _name_raw = re.findall('<h1>(.+) #\d{1,7}<\/h1>', str(_soup))[0]
         self.official_name = _name_raw.split('#')[0].strip()
