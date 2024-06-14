@@ -90,18 +90,33 @@ def object_exists(domain, table_name, headers, where=''):
     return bool(row_count)
 
 
-    # event_in_table = object_exists(domain=domain, table_name=table_name, headers=headers, where=f'EventID={event}')
+def batch_list(records):
+
+    num_records = len(records)
+    batches = [records[x:x+100] for x in range(0, num_records, 100)]
+    num_batches = len(batches)
+    if num_batches > 1:
+        es = 'es'
+    else:
+        es = ''
+
+    return batches, es
+
+
 def add_event(domain, headers, event_records, table_name='EventResults'):
 
-    print(f'https://{domain}/api/data/bulkupsert/{table_name}/')
+    num_records = len(event_records)
+    event_batches, es = batch_list(event_records)
+    num_batches = len(event_batches)
 
-    r = requests.put(
-        f'https://{domain}/api/data/bulkupsert/{table_name}/',
-        headers=headers,
-        json=event_records,
-    )
+    for batch in event_batches:
+        r = requests.put(
+            f'https://{domain}/api/data/bulkupsert/{table_name}',
+            headers=headers,
+            json=batch,
+        )
 
-    return r.json()
+    return f'{num_records} records were inserted in {num_batches} batch{es}'
 
 
 def update_event(domain, headers, event_records, table_name='EventResults'):
@@ -119,7 +134,6 @@ def add_or_update_event(domain, headers, event_number, table_name='EventResults'
 
     event_exists = object_exists(domain=domain, table_name=table_name, headers=headers, where=f'EventID={event_number}')
     event_records = event_parser(event_number).to_dict('records')
-    print(event_records[:5])
     for er in event_records:
         er['EventID'] = event_number
 
@@ -130,6 +144,3 @@ def add_or_update_event(domain, headers, event_number, table_name='EventResults'
         response = update_event(domain=domain, headers=headers, event_records=event_records, table_name=table_name)
 
     return response
-
-
-    print(events[0].to_dict('records'))

@@ -1,6 +1,5 @@
 import requests
-from league import update_player_rating, event_parser
-from api_updates import add_or_update_event
+from api_updates import update_player_ratings, add_or_update_event
 from creds import backendless_creds
 import urllib.parse as ulp
 
@@ -31,6 +30,10 @@ headers = {
 # UPDATE PLAYER RATINGS
 # update_player_ratings(domain=domain, table_name='Players', headers=headers)
 
-events_to_add = [77764, 77765, 77766]
+events_to_add = [
+    # 77764,
+    # 77765,
+    77766
+]
 response = add_or_update_event(domain, headers, events_to_add[0], table_name='EventResults')
 print(response)
