@@ -1,6 +1,8 @@
 import requests
 from league import update_player_rating, event_parser
+from api_updates import add_or_update_event
 from creds import backendless_creds
+import urllib.parse as ulp
 
 api_creds = backendless_creds()
 domain = api_creds['domain']
@@ -29,11 +31,6 @@ headers = {
 # UPDATE PLAYER RATINGS
 # update_player_ratings(domain=domain, table_name='Players', headers=headers)
 
-event_url = 'https://www.pdga.com/tour/event/'
 events_to_add = [77764, 77765, 77766]
-
-events = [event_parser(event_url+str(e)) for e in events_to_add]
-
-print(events[0].head())
-print(events[1].head())
-print(events[2].head())
+response = add_or_update_event(domain, headers, events_to_add[0], table_name='EventResults')
+print(response)

@@ -39,9 +39,10 @@ def event_row_parser(row):
 
     return result
 
-def event_parser(url):
+def event_parser(event_number):
+    event_url = 'https://www.pdga.com/tour/event/'
 
-    soup = soupify(url)
+    soup = soupify(event_url + str(event_number))
     soup_table = soup.select('div[class*="leaderboard"]')[0]
     results_table_raw = soup_table.select('div[class*="table-container"]')[0]
     odd_rows = results_table_raw.select('tr[class*="odd"]')

@@ -3,7 +3,8 @@ import json
 import pandas as pd
 from datetime import datetime
 from general_functions import second_tuesdays, to_datetime
-from league import update_player_rating
+from league import update_player_rating, event_parser
+import urllib.parse as ulp
 
 
 def retrieve_table(domain, table_name, headers, page_size=100):
@@ -69,3 +70,66 @@ def update_player_ratings(domain, table_name, headers):
     print(f'Number of player ratings updated: {num_players_updated}')
 
     return None
+
+
+# def create_url(table_name, where)
+
+
+def object_exists(domain, table_name, headers, where=''):
+
+    url = f'https://{domain}/api/data/{table_name}/count'
+
+    if where:
+        url_where = ulp.quote(where)
+        url += '?where=' + url_where
+        print(url)
+
+    r = requests.get(url=url, headers=headers)
+    row_count = int(r.json())
+
+    return bool(row_count)
+
+
+    # event_in_table = object_exists(domain=domain, table_name=table_name, headers=headers, where=f'EventID={event}')
+def add_event(domain, headers, event_records, table_name='EventResults'):
+
+    print(f'https://{domain}/api/data/bulkupsert/{table_name}/')
+
+    r = requests.put(
+        f'https://{domain}/api/data/bulkupsert/{table_name}/',
+        headers=headers,
+        json=event_records,
+    )
+
+    return r.json()
+
+
+def update_event(domain, headers, event_records, table_name='EventResults'):
+
+    # r = requests.put(
+    #     f'https://{domain}/api/data/bulkupsert/{table_name}/',
+    #     headers=headers,
+    #     json=event_records,
+    # )
+
+    return 'Event already exists in table'
+
+
+def add_or_update_event(domain, headers, event_number, table_name='EventResults'):
+
+    event_exists = object_exists(domain=domain, table_name=table_name, headers=headers, where=f'EventID={event_number}')
+    event_records = event_parser(event_number).to_dict('records')
+    print(event_records[:5])
+    for er in event_records:
+        er['EventID'] = event_number
+
+    if not event_exists:
+        response = add_event(domain=domain, headers=headers, event_records=event_records, table_name=table_name)
+
+    else:
+        response = update_event(domain=domain, headers=headers, event_records=event_records, table_name=table_name)
+
+    return response
+
+
+    print(events[0].to_dict('records'))
