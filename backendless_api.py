@@ -30,6 +30,7 @@ headers = {
 # UPDATE PLAYER RATINGS
 # update_player_ratings(domain=domain, table_name='Players', headers=headers)
 
+# ADD OR UPDATE EVENT
 event_number = 77766
 response = add_or_update_event(domain, headers, event_number, table_name='EventResults')
 print(response)
