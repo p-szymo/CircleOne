@@ -7,17 +7,26 @@ from league import update_player_rating, event_parser
 import urllib.parse as ulp
 
 
-def retrieve_table(domain, table_name, headers, page_size=100):
+def retrieve_table(domain, table_name, headers, where='', page_size=100):
+
+    if where:
+        url_where = '?where=' + ulp.quote(where)
+    else:
+        url_where = ''
 
     offset = 0
     table = []
 
     # COUNT OBJECT
-    url = f'https://{domain}/api/data/{table_name}/count'
+    url = f'https://{domain}/api/data/{table_name}/count{url_where}'
     r = requests.get(url=url, headers=headers)
     row_count = int(r.json())
+
+    if url_where:
+        url_where = url_where[1:] + '&'
+
     while offset < row_count:
-        url = f'https://{domain}/api/data/{table_name}?pageSize={page_size}&offset={offset}'
+        url = f'https://{domain}/api/data/{table_name}?{url_where}pageSize={page_size}&offset={offset}'
         r = requests.get(url=url, headers=headers)
         table += r.json()
         offset += page_size
@@ -119,7 +128,52 @@ def add_event(domain, headers, event_records, table_name='EventResults'):
     return f'{num_records} records were inserted in {num_batches} batch{es}'
 
 
-def update_event(domain, headers, event_records, table_name='EventResults'):
+def update_event(domain, headers, event_records, event_number, table_name='EventResults'):
+
+    updated_scores = {
+        record['PlayerID']: {'place': record['Place'], 'score': record['Score']} for record in event_records
+    }
+
+    where = f'EventID={event_number}'
+
+    df = retrieve_table(domain=domain, table_name=table_name, headers=headers, where=where).fillna(0)
+
+    prev_scores = df.to_dict('records')
+
+    for record in prev_scores:
+        player = record['PlayerID']
+        record['Place'] = updated_scores[player]['place']
+        record['Score'] = updated_scores[player]['score']
+
+    event_batches, es = batch_list(prev_scores)
+
+    response = add_event(domain=domain, headers=headers, event_records=prev_scores, table_name=table_name)
+
+    # for batch in event_batches:
+    #     r = requests.put(
+    #         f'https://{domain}/api/data/bulkupsert/{table_name}',
+    #         headers=headers,
+    #         json=batch,
+    #     )
+    #
+    # for i, row in df.iterrows():
+    #     pdga_number = row['PlayerID']
+    #     row_id = row['objectId']
+    #     last_updated = row['PlayerRatingLastUpdated']
+    #
+    #     if player_rating_needs_update(to_datetime(last_updated)):
+    #         updated_rating = update_player_rating(pdga_number)
+    #         updated_at = datetime.now()
+    #         json_data = {
+    #             'PlayerRating': updated_rating,
+    #             'PlayerRatingLastUpdated': updated_at.strftime('%Y-%m-%d %H:%M:%S'),
+    #         }
+    #         r = requests.put(
+    #             f'https://{domain}/api/data/{table_name}/{row_id}',
+    #             headers=headers,
+    #             json=json_data,
+    #         )
+    #         num_players_updated += 1
 
     # r = requests.put(
     #     f'https://{domain}/api/data/bulkupsert/{table_name}/',
@@ -127,7 +181,7 @@ def update_event(domain, headers, event_records, table_name='EventResults'):
     #     json=event_records,
     # )
 
-    return 'Event already exists in table'
+    return response.replace('inserted', 'updated')
 
 
 def add_or_update_event(domain, headers, event_number, table_name='EventResults'):
@@ -141,6 +195,12 @@ def add_or_update_event(domain, headers, event_number, table_name='EventResults'
         response = add_event(domain=domain, headers=headers, event_records=event_records, table_name=table_name)
 
     else:
-        response = update_event(domain=domain, headers=headers, event_records=event_records, table_name=table_name)
+        response = update_event(
+            domain=domain,
+            headers=headers,
+            event_records=event_records,
+            event_number=event_number,
+            table_name=table_name
+        )
 
     return response

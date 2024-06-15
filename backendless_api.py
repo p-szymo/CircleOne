@@ -30,10 +30,6 @@ headers = {
 # UPDATE PLAYER RATINGS
 # update_player_ratings(domain=domain, table_name='Players', headers=headers)
 
-events_to_add = [
-    # 77764,
-    # 77765,
-    77766
-]
-response = add_or_update_event(domain, headers, events_to_add[0], table_name='EventResults')
+event_number = 77766
+response = add_or_update_event(domain, headers, event_number, table_name='EventResults')
 print(response)
