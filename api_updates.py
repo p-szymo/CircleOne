@@ -145,41 +145,7 @@ def update_event(domain, headers, event_records, event_number, table_name='Event
         record['Place'] = updated_scores[player]['place']
         record['Score'] = updated_scores[player]['score']
 
-    event_batches, es = batch_list(prev_scores)
-
     response = add_event(domain=domain, headers=headers, event_records=prev_scores, table_name=table_name)
-
-    # for batch in event_batches:
-    #     r = requests.put(
-    #         f'https://{domain}/api/data/bulkupsert/{table_name}',
-    #         headers=headers,
-    #         json=batch,
-    #     )
-    #
-    # for i, row in df.iterrows():
-    #     pdga_number = row['PlayerID']
-    #     row_id = row['objectId']
-    #     last_updated = row['PlayerRatingLastUpdated']
-    #
-    #     if player_rating_needs_update(to_datetime(last_updated)):
-    #         updated_rating = update_player_rating(pdga_number)
-    #         updated_at = datetime.now()
-    #         json_data = {
-    #             'PlayerRating': updated_rating,
-    #             'PlayerRatingLastUpdated': updated_at.strftime('%Y-%m-%d %H:%M:%S'),
-    #         }
-    #         r = requests.put(
-    #             f'https://{domain}/api/data/{table_name}/{row_id}',
-    #             headers=headers,
-    #             json=json_data,
-    #         )
-    #         num_players_updated += 1
-
-    # r = requests.put(
-    #     f'https://{domain}/api/data/bulkupsert/{table_name}/',
-    #     headers=headers,
-    #     json=event_records,
-    # )
 
     return response.replace('inserted', 'updated')
 

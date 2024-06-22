@@ -171,3 +171,8 @@ def event_status(schedule, start_time=12):
             message = f"""NEXT EVENT - TOUR STOP #{next_event_number} - {next_event['EVENT_NAME']}
 ### Check back on {datestring} at noon"""
             return next_event['EVENT_NUMBER'], message
+
+
+events = sorted([e['EVENT_NUMBER'] for e in schedule_2024() if int(e['START_DATE'][6])<7])
+for e in events:
+    print(e)
