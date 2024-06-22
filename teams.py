@@ -6,16 +6,17 @@ def teams():
             'owner': 'BRITT',
             'starters': [
                 'Gannon Buhr',
-                'James Proctor',
-                'Aaron Gossage',
                 'Bradley Williams',
+                'Aaron Gossage',
                 'Matt Bell',
+                'Chris Clemons',
             ],
             'bench': [
-                'Chris Clemons',
+                'James Proctor',
                 'Robert Burridge',
                 'Nikko Locastro',
-            ]
+            ],
+            'injured_reserve': None
         },
         {
             'owner': 'DEREK',
@@ -27,48 +28,49 @@ def teams():
                 'Luke Humphries',
             ],
             'bench': [
-                'Väinö Mäkelä',
+                'Alex Geisinger',
                 'Garrett Gurthie',
                 'Jesse Nieminen',
-            ]
+            ],
+            'injured_reserve': 'Väinö Mäkelä'
         },
         {
             'owner': 'ERIC',
             'starters': [
-                'Calvin Heimburg',
-                'Niklas Anttila',
                 'Andrew Presnell',
+                'Emerson Keith',
+                'Evan Smith',
                 'Adam Hammes',
                 'Evan Scott',
             ],
             'bench': [
-                'Joel Freeman',
-                'Emerson Keith',
-                'Sullivan Tipton',
+                'Calvin Heimburg',
+                'Niklas Anttila',
+                'Chandler Kramer',
             ],
-            'injured_reserve': None
+            'injured_reserve': 'Joel Freeman'
         },
         {
             'owner': 'JOSH',
             'starters': [
-                'Ezra Robinson',
+                'Matthew Orum',
+                'Luke Taylor',
                 'Paul Ulibarri',
                 'James Conrad',
-                'Luke Taylor',
                 'Jake Hebenheimer',
             ],
             'bench': [
                 'Chris Dickerson',
-                'Matthew Orum',
-                'Jakub Semerád',
+                'Ezra Robinson',
+                'Paul Krans',
             ],
-            'injured_reserve': 'Paul Krans'
+            'injured_reserve': 'Jakub Semerád'
         },
         {
             'owner': 'SAM',
             'starters': [
-                'Anthony Barela',
                 'Paul McBeth',
+                'Anthony Barela',
                 'Gavin Babcock',
                 'Ty Love',
                 'Connor Rock',
@@ -83,15 +85,15 @@ def teams():
         {
             'owner': 'TAYLOR',
             'starters': [
-                'Eagle McMahon',
                 'Cole Redalen',
-                'Ezra Aderhold',
                 'Jeremy Koling',
                 'Casey White',
+                'Ezra Aderhold',
+                'Kevin Jones',
             ],
             'bench': [
-                'Nathan Doss',
-                'Kevin Jones'
+                'Eagle McMahon',
+                'Nathan Queen',
                 'Austin Turner',
             ],
             'injured_reserve': 'Lauri Lehtinen'
@@ -101,14 +103,15 @@ def teams():
             'starters': [
                 'Simon Lizotte',
                 'Kyle Klein',
-                'Alden Harris',
                 'Andrew Marwede',
-                'Drew Gibson',
+                'Mason Ford',
+                'Alden Harris',
             ],
             'bench': [
-                'Mason Ford',
                 'Joona Heinänen',
                 'Albert Tamm',
-            ]
+                'Drew Gibson',
+            ],
+            'injured_reserve': None
         }
     ]
