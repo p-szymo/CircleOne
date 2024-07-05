@@ -21,47 +21,47 @@ def teams():
         {
             'owner': 'DEREK',
             'starters': [
-                'Richard Wysocki',
                 'Isaac Robinson',
-                'Joseph Anderson',
+                'Cale Leiviska',
                 'Gavin Rathbun',
                 'Luke Humphries',
+                'Gregg Barsby',
             ],
             'bench': [
-                'Alex Geisinger',
+                'Richard Wysocki',
+                'Joseph Anderson',
                 'Garrett Gurthie',
-                'Jesse Nieminen',
             ],
             'injured_reserve': 'Väinö Mäkelä'
         },
         {
             'owner': 'ERIC',
             'starters': [
+                'Calvin Heimburg',
                 'Andrew Presnell',
                 'Emerson Keith',
                 'Evan Smith',
                 'Adam Hammes',
-                'Evan Scott',
             ],
             'bench': [
-                'Calvin Heimburg',
                 'Niklas Anttila',
                 'Chandler Kramer',
+                'Evan Scott',
             ],
             'injured_reserve': 'Joel Freeman'
         },
         {
             'owner': 'JOSH',
             'starters': [
+                'Chris Dickerson',
+                'Ezra Robinson',
                 'Matthew Orum',
                 'Luke Taylor',
                 'Paul Ulibarri',
-                'James Conrad',
-                'Jake Hebenheimer',
             ],
             'bench': [
-                'Chris Dickerson',
-                'Ezra Robinson',
+                'James Conrad',
+                'Jake Hebenheimer',
                 'Paul Krans',
             ],
             'injured_reserve': 'Jakub Semerád'
