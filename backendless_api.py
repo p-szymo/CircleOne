@@ -10,11 +10,9 @@ api_key = api_creds['api_key']
 email = api_creds['email']
 name = api_creds['user_name']
 password = api_creds['password']
-user_token = api_creds['user_token']
 
 headers = {
     'content-type': 'application/json',
-    'user-token': user_token,
 }
 
 # REGISTER
@@ -22,10 +20,10 @@ headers = {
 # data = '{"email":"'+email+'","name":"'+name+'","password":"'+password+'"}'
 
 # LOGIN
-# url = f'https://api.backendless.com/{app_id}/{api_key}/users/login'
-# data = '{"login":"'+email+'","password":"'+password+'"}'
-
-# r = requests.post(url=url, data=data, headers=headers)
+url = f'https://api.backendless.com/{app_id}/{api_key}/users/login'
+data = '{"login":"'+email+'","password":"'+password+'"}'
+r = requests.post(url=url, data=data, headers=headers)
+headers['user-token'] = r.json()['user-token']
 
 # UPDATE PLAYER RATINGS
 update_player_ratings(domain=domain, table_name='Players', headers=headers)

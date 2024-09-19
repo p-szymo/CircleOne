@@ -61,6 +61,8 @@ def update_player_ratings(domain, table_name, headers):
         pdga_number = row['PlayerID']
         row_id = row['objectId']
         last_updated = row['PlayerRatingLastUpdated']
+        if row['PlayerName'] == 'Matthew Orum':
+            print(row)
 
         if player_rating_needs_update(to_datetime(last_updated)):
             updated_rating = update_player_rating(pdga_number)
